@@ -47,7 +47,7 @@ const set08:iData [] = [
         stack:"Full-stack"
     },
     
- ]
+ ] 
 
 const myServer = http.createServer((req:IncomingMessage, res:ServerResponse<IncomingMessage>)=>{
     res.setHeader("Content-type", "application/json")
@@ -92,7 +92,7 @@ const myServer = http.createServer((req:IncomingMessage, res:ServerResponse<Inco
 
        })
     
-    res.end()
+
 });
 myServer.listen(port, ()=>{
     console.log("Port running on ", port)
