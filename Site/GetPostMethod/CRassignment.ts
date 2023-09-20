@@ -1,47 +1,78 @@
-import http, { IncomingMessage, ServerResponse } from "http"
+import http,{ IncomingMessage, ServerResponse } from "http"
 
 interface iData{
     id:number
     name:string
     stack:string
-    password:number
+    num:number
+}
+interface iMessage{
+    message:string
+    success:boolean
+    data: null | {} |{}[]
+    
 }
 
-const userData:iData[] = [
+const Data:iData[] =[
     {
-        id: 1,
-        name: "Emmanuel",
-        stack: "Half-stack",
-        password:57829365
+        id:1,
+        name:"Peters",
+        stack:"Full-stack",
+        num:4759574982 
     },
     {
-        id: 2,
-        name: "Favour",
-        stack: "Half-stack",
-        password:785942856
-    },
-    {
-        id: 3,
-        name: "Franklin",
-        stack: "Half-stack",
-        password:6598567678
-    },
-    {
-        id: 4,
-        name: "Emmanuel",
-        stack: "Half-stack",
-        password:5782278457
-    },
-]
+    id:1,
+    name:"Samuel",
+    stack:"Full-stack",
+    num:474884646782 
+   },
+   {    id:1,
+    name:"Adisa",
+    stack:"Full-stack",
+    num:475489753 
+   },
+   {
+    id:4,
+    name:"Francis",
+    stack:"Full-stack",
+    num:4759574982 
+   },
+] 
 
-const port = 2005 
+const port = 2005
 
 const server = http.createServer((req:IncomingMessage, res:ServerResponse<IncomingMessage>)=>{
     res.setHeader("Content-type", "application/json")
-    res.write(JSON.stringify({userData}))
-    res.end()
-});
+    const {method, url} = req
 
-server.listen(port, ()=>{
-    console.log("Port running on", port)
+    let status = 404
+
+    let response:iMessage ={
+        message: "failed",
+        success: false,
+        data:null
+    }
+
+    let container:any = []
+
+    req
+       .on("data", (chunk:any)=>{
+        container.push(chunk)
+       })
+       .on("end", ()=>{
+        if(url === "/" && method === "GET"){
+            status= 200
+            response.message= "Successfully compiled"
+            response.success = true
+            response.data = Data
+            res.write(JSON.stringify({response, status}))
+            res.end()
+        }
+
+        //post method
+        if(url ==="/" && method === "GET"){
+            const body = JSON.parse(container)
+            Data.push(body)
+        }
+       })
 })
