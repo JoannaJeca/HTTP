@@ -3,86 +3,45 @@ import http, { IncomingMessage, ServerResponse } from "http"
 interface iData{
     id:number
     name:string
-    age:number
     stack:string
+    password:number
 }
 
-interface iMessage{
-    message : string
-    success:boolean
-    data: null | [] | {}[]
-}
-
-const user:iData[] = [
+const userData:iData[] = [
     {
         id: 1,
-        name: "Wisdom",
-        age : 55,
-        stack : "Full-stack"
+        name: "Emmanuel",
+        stack: "Half-stack",
+        password:57829365
     },
     {
         id: 2,
-        name: "Sean",
-        age : 55,
-        stack : "Front-end"
+        name: "Favour",
+        stack: "Half-stack",
+        password:785942856
     },
     {
         id: 3,
-        name: "Prince",
-        age : 55,
-        stack : "Full-stack"
+        name: "Franklin",
+        stack: "Half-stack",
+        password:6598567678
     },
     {
         id: 4,
-        name: "Jessica",
-        age : 55,
-        stack : "Back-End"
+        name: "Emmanuel",
+        stack: "Half-stack",
+        password:5782278457
     },
 ]
 
-const port = 2005
+const port = 2005 
 
 const server = http.createServer((req:IncomingMessage, res:ServerResponse<IncomingMessage>)=>{
     res.setHeader("Content-type", "application/json")
-    const {method, url} = req
-
-    let status:number = 404
-    const feedback:iMessage = {
-        message:"failed",
-        success:false,
-        data:null
-    }
-
-    const container:any = []
-
-    req
-       .on("data", (chunk:any)=>{
-        container.push(chunk)
-       })
-       .on("end", ()=>{
-        if(url === "/" && method === "GET"){
-            status = 200
-            feedback.message = "Successfully licensed and promoted as stacks"
-            feedback.success = true
-            feedback.data = user
-            res.write(JSON.stringify({feedback, status}))
-            res.end()
-        }
-
-        //POST method
-        status = 201
-        const body = JSON.parse(container)
-        user.push(body)
-        feedback.message = "Successfully licensed another Stack"
-        feedback.success = true
-        feedback.data = user
-        res.write(JSON.stringify({feedback, status}))
-        res.end()
-       })
-
-    
+    res.write(JSON.stringify({userData}))
+    res.end()
 });
 
 server.listen(port, ()=>{
-    console.log("Port running at ", port)
-}) 
+    console.log("Port running on", port)
+})
