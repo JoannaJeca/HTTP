@@ -36,7 +36,6 @@ myServer.listen(porter, () =>{
 
 
 
-
 // const port = 4000
 
 
@@ -81,7 +80,6 @@ myServer.listen(porter, () =>{
 //     console.log("");
 //     console.log("Server is listening to port on port", port)
 // })
-
 
 
 
